@@ -62,6 +62,7 @@ class Data{
 				$payment_type = $row['type'];
 				$paid = $row['paid'];
 				$rid = $row['id'];
+                                
 				if($paid==1){
 					$paid=true;
 					$to_add=false;
@@ -69,62 +70,63 @@ class Data{
 					$paid=false;
 					$to_add=true;
 				}
-					if($row['linens']==0){
-						$lines='No Linens';
-					}else{
-						$lines = 'Linens';
-						$linens=true;
-					}
-					if($row['occ']==1){
-						$occ="Single";
-					}else if($row['occ']==2){
-						$occ="Double";
-					}else{
-						$occ="Double";
-					}
-					$st=$row['arrive'];
-					$en=$row['depart'];
-					$num_nights=$en-$st;
-					$multiplier=1;
-					if($row['occ']==1){ //if occupancy is recorded as single
-						$multiplier=2;
-					}
-					if($linens){
-							if($to_add){
-								$total_cost+=($num_nights*36)*$multiplier;
-								$max_cost+=($num_nights*36)*$multiplier;
-							}else{
-								$max_cost+=($num_nights*36)*$multiplier;
-							}
-					}else{
-							if($to_add){
-									$total_cost+=($num_nights*31)*$multiplier;
-									$max_cost+=($num_nights*36)*$multiplier;
-							}else{
-								$max_cost+=($num_nights*36)*$multiplier;
-							}
-						}
-					$html.='<tr><td class="editname" id='.$rid.'>'.$row['first'].' '.$row['last'].'</td><td class="editgender" id='.$rid.'>'.$row['gender'].'</td>
-					<td class="editarrive" id='.$rid.'>'.$row['arrive'].'</td><td class="editdepart" id='.$rid.'>'.$row['depart'].'</td>
-					<td class="editlinens" id='.$rid.'>'.$lines.'</td><td class="editdis" id='.$rid.'>'.$row['disability'].'</td>
-					<td class="editocc" id='.$rid.'>'.$occ.'</td><td class="editrole" id='.$rid.'>'.$row['role'].'</td>';
-					if(!$paid){
-							$html.='<td><input type="checkbox" value="'.$row['id'].'" name="dropping[]"/></td></tr>';
-					}else{
-						$html.='<td>Paid for</td></tr>';
-					}
-					
-					
-					
+                                
+				if($row['linens']==0){
+				    $lines='No Linens';
+				}else{
+                                    $lines = 'Linens';
+                                    $linens=true;
+			    	}
+                                
+				if($row['occ']==1){
+                                    $occ="Single";
+				}else if($row['occ']==2){
+				    $occ="Double";
+				}else{
+				    $occ="Double";
 				}
-				$html.='<input type="hidden" value="'.$id.'" name="id"/></form></table>';
-				return $html;
+                                
+				$st=$row['arrive'];
+				$en=$row['depart'];
+				$num_nights=$en-$st;
+				$multiplier=1;
+				if($row['occ']==1){ //if occupancy is recorded as single
+				    $multiplier=2;
+				}
+				if($linens){
+                                    if($to_add){
+				    	$total_cost+=($num_nights*36)*$multiplier;
+					$max_cost+=($num_nights*36)*$multiplier;
+				    }else{
+					$max_cost+=($num_nights*36)*$multiplier;
+				    }
+				}else{
+                                    if($to_add){
+					$total_cost+=($num_nights*31)*$multiplier;
+				    	$max_cost+=($num_nights*36)*$multiplier;
+				    }else{
+					$max_cost+=($num_nights*36)*$multiplier;
+				    }
+				}
+					
+                        $html.='<tr><td class="editname" id='.$rid.'>'.$row['first'].' '.$row['last'].'</td><td class="editgender" id='.$rid.'>'.$row['gender'].'</td>
+                                <td class="editarrive" id='.$rid.'>'.$row['arrive'].'</td><td class="editdepart" id='.$rid.'>'.$row['depart'].'</td>
+				<td class="editlinens" id='.$rid.'>'.$lines.'</td><td class="editdis" id='.$rid.'>'.$row['disability'].'</td>
+				<td class="editocc" id='.$rid.'>'.$occ.'</td><td class="editrole" id='.$rid.'>'.$row['role'].'</td>';
+				
+                                if(!$paid){
+					$html.='<td><input type="checkbox" value="'.$row['id'].'" name="dropping[]"/></td></tr>';
+				}else{
+				    $html.='<td>Paid for</td></tr>';
+				}	
+                        }
+                $html.='<input type="hidden" value="'.$id.'" name="id"/></form></table>';
+		return $html;
 	}
         function draw_all_data($team){
-	$cost=31;		//Global cost!
-	//$team_id=mysql_escape_string($_POST['teams']);
+	$cost=31;		
 	$team_id=$team;
-	echo '<h2>School Information</h2>';
+	/*echo '<h2>School Information</h2>';
 	$get_username="SELECT * FROM `team` WHERE `id`='$team_id'";
 	$getname=mysql_query($get_username)or die(mysql_error());
 	while($row = mysql_fetch_array($getname)){
@@ -139,18 +141,17 @@ class Data{
 		echo $row['City'].' '.$row['State'].' '.$row['Zip'];
 		
 	}
-	echo '<h2>Dorm Reservation List</h2>';
+	echo '<h2>Dorm Reservation List</h2>';*/
 
 	
-	$get_beds="SELECT * FROM `beds` WHERE `team_id`='$team_id'";
-	$go_getem = mysql_query($get_beds)or die(mysql_error());
-	echo '<table><form method="POST" action="">';
-	echo '<tr><th>Name</th><th>Gender</th><th>Arrival</th><th>Departure</th><th>Linens</th><th>Disability?</th><th>Type</th><th>Role</th><th>Time Stamp</th><th>Drop</th><th>Paid</th></tr>';
+        $get_beds="SELECT * FROM `beds` WHERE `team_id`=?";
+	$query_beds = $dbh->prepare($get_beds);
+	$query_beds->execute(array($team_id));  
 	$total_cost=0;
 	$max_cost=0;
 	$payment_type=0;
 	$paid=0;
-	while($row=mysql_fetch_array($go_getem)){
+	foreach($query_beds->fetchAll() as $row){
 	$linens=false;
 	$num_nights=0;
 	$payment_type=$row['type'];
@@ -200,14 +201,14 @@ class Data{
 				}else{
 					$max_cost+=($num_nights*$rate)*$multiplier;
 				}
-		echo '<tr><td>'.$row['first'].' '.$row['last'].'</td><td>'.$row['gender'].'</td><td>'.$row['arrive'].'</td><td>'.$row['depart'].'</td><td>'.$lines.'</td><td>'.$row['disability'].'</td><td>'.$occ.'</td><td>'.$row['role'].'</td><td>'.$row['date'].'</td><td><input type="checkbox" value="'.$row['id'].'" name="dropping[]"/></td><td>'.$paid.'</td></tr>';
+		$html .= '<tr><td>'.$row['first'].' '.$row['last'].'</td><td>'.$row['gender'].'</td><td>'.$row['arrive'].'</td><td>'.$row['depart'].'</td><td>'.$lines.'</td><td>'.$row['disability'].'</td><td>'.$occ.'</td><td>'.$row['role'].'</td><td>'.$row['date'].'</td><td><input type="checkbox" value="'.$row['id'].'" name="dropping[]"/></td><td>'.$paid.'</td></tr>';
 		
 		
 		
 	}
-	echo '<input type="hidden" value="'.$team_id.'" name="id"/><input type="submit" value="Drop" name="drop"/></form></table>';
-	echo '<br>';
-	echo '<table width="700px" border="0">
+	$html .= '<input type="hidden" value="'.$team_id.'" name="id"/><input type="submit" value="Drop" name="drop"/></form></table>';
+	$html .= '<br>';
+	$html .= '<table width="700px" border="0">
         <tr>
           <td align=left width="200px"><h2>Type: '.$payment_type.'</h2></td>
           
@@ -215,7 +216,9 @@ class Data{
           <td align=left><h2>Grand Total: $'.$max_cost.'</h2></td>
         </tr>
       </table> ';
+      return $html;
         }
+        
 }
 class Display {
     //Diplay the data on the page, using returns from the Data Class
