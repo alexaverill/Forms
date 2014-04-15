@@ -4,7 +4,7 @@ include('local_header.php');
 $data = new Data;
 
 	if($_POST['go']){
-		draw_all_data($_POST['teams']);
+		admin_table($_POST['teams']);
 	}
 	if($_POST['paid']){
 		$data->set_paid($id);

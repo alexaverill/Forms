@@ -14,6 +14,9 @@ class Data{
 		
     }
     public function team_options(){
+        /*
+         * Returns the select options for admin to view teams
+         * */
         global $dbh;
         $html = '';
         $sql = "SELECT * FROM `team` ORDER BY `name` ASC";
@@ -25,10 +28,18 @@ class Data{
         
     }
     public function set_paid($team_id){
+        /*
+         * Function to set all the teams entries to paid when payment has been recieved
+         * */
+        global $dbh;
         $sql="UPDATE `beds` SET  `paid` =  '1' WHERE  `team_id` =?";
-        
+        $set_paid=$dbh->prepare($sql);
+        $set_paid->execute(array($team_id));
     }
     public function insert_rooming($id,$first,$last,$gender,$arrive,$depart,$linens,$occ,$disabled,$role){
+        /*
+         *Save teams reservation
+         **/
     	global $dbh;
     	$sql = "INSERT INTO `beds` (`id`, `team_id`, `first`, `last`, `gender`, `arrive`, `depart`, `linens`, `occ`, `disability`, `role`, `date`)
     	 VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP);";
@@ -123,7 +134,7 @@ class Data{
                 $html.='<input type="hidden" value="'.$id.'" name="id"/></form></table>';
 		return $html;
 	}
-        function draw_all_data($team){
+        public function return_admin_table($team){
 	$cost=31;		
 	$team_id=$team;
 	/*echo '<h2>School Information</h2>';
@@ -165,7 +176,7 @@ class Data{
 		$paid='Yes';
 		$to_add=false;
 		}else{
-		$paid='No';
+		$paid = 'No';
 		$to_add=true;
 		}
 		if($row['linens']==0){
@@ -223,24 +234,29 @@ class Data{
 class Display {
     //Diplay the data on the page, using returns from the Data Class
     public function display_page($page_title){
-		$final_page='templates/template_';
-		$final_page.=$page_title;
-		$final_page.='.php';
+		$final_page = 'templates/template_';
+		$final_page .= $page_title;
+		$final_page .= '.php';
 		include($final_page);
 	}
     public function display_table($id){
 		$data= new Data;
-		$html= $data->return_table($id)
+		$html = $data->return_table($id)
 		echo $html;
-	}
+    }
+    public function admin_table($id){
+        $data = new Data;
+        $html = $data->return_admin_table($id);
+        echo $html;
+    }
     public function call_drop($id){
     	$data = new Data;
     	$data->drop_room_reserve($id);
     }
     public function return_team_options(){
-        $data= new Data;
-        $html='';
-        $html.=$data->team_options();
+        $data = new Data;
+        $html = '';
+        $html .= $data->team_options();
         echo $html;
         
     }
