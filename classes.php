@@ -32,8 +32,8 @@ class Data{
          * Function to set all the teams entries to paid when payment has been recieved
          * */
         global $dbh;
-        $sql="UPDATE `beds` SET  `paid` =  '1' WHERE  `team_id` =?";
-        $set_paid=$dbh->prepare($sql);
+        $sql = "UPDATE `beds` SET  `paid` =  '1' WHERE  `team_id` =?";
+        $set_paid = $dbh->prepare($sql);
         $set_paid->execute(array($team_id));
     }
     public function insert_rooming($id,$first,$last,$gender,$arrive,$depart,$linens,$occ,$disabled,$role){
@@ -43,7 +43,7 @@ class Data{
     	global $dbh;
     	$sql = "INSERT INTO `beds` (`id`, `team_id`, `first`, `last`, `gender`, `arrive`, `depart`, `linens`, `occ`, `disability`, `role`, `date`)
     	 VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP);";
-    	 $insert=$dbh->prepare($sql);
+    	 $insert = $dbh->prepare($sql);
     	 $insert->execute(array($id,$first,$last,$gender,$arrive,$depart,$linens,$occ,$disabled,$role));
 		
     }
@@ -54,7 +54,7 @@ class Data{
 		 **/
 		global $dbh;
 		$sql = "DELETE FROM `beds` WHERE `id`=? LIMIT 1";
-		$go=$dbh->prepare($sql);
+		$go = $dbh->prepare($sql);
 		$go->execute(array($id));
 	}
 	public function return_table($team_id){
@@ -62,31 +62,31 @@ class Data{
 			$get_beds="SELECT * FROM `beds` WHERE `team_id`=?";
 			$query_beds = $dbh->prepare($get_beds);
 			$query_beds->execute(array($team_id));
-			$total_cost=0;
-			$max_cost=0;
-			$payment_type=0;
-			$paid=0;
-			$html='';
+			$total_cost = 0;
+			$max_cost = 0;
+			$payment_type = 0;
+			$paid = 0;
+			$html = '';
 			foreach($query_beds->fetchAll() as $row){
-				$linens=false;
+				$linens = false;
 				$num_nights = 0;
 				$payment_type = $row['type'];
 				$paid = $row['paid'];
 				$rid = $row['id'];
                                 
 				if($paid==1){
-					$paid=true;
-					$to_add=false;
+					$paid = true;
+					$to_add = false;
 				}else{
-					$paid=false;
-					$to_add=true;
+					$paid = false;
+					$to_add = true;
 				}
                                 
-				if($row['linens']==0){
-				    $lines='No Linens';
+				if($row['linens'] == 0){
+				    $lines = 'No Linens';
 				}else{
                                     $lines = 'Linens';
-                                    $linens=true;
+                                    $linens = true;
 			    	}
                                 
 				if($row['occ']==1){
