@@ -42,10 +42,17 @@ class Data{
          **/
     	global $dbh;
     	$sql = "INSERT INTO `beds` (`id`, `team_id`, `first`, `last`, `gender`, `arrive`, `depart`, `linens`, `occ`, `disability`, `role`, `date`)
-    	 VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP);";
+    	 VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
     	 $insert = $dbh->prepare($sql);
-    	 $insert->execute(array($id,$first,$last,$gender,$arrive,$depart,$linens,$occ,$disabled,$role));
-		
+	 if (!$insert) {
+	    echo "\nPDO::errorInfo():\n";
+	    print_r($pdo->errorInfo());
+	}
+	 try{
+		$insert->execute(array($id,$first,$last,$gender,$arrive,$depart,$linens,$occ,$disabled,$role));
+	 }catch(Exception $e){
+		echo $e;
+	 }
     }
     public function drop_room_reserve($id){
 		/*
@@ -59,7 +66,7 @@ class Data{
 	}
 	public function return_table($team_id){
 			global $dbh;
-			$get_beds="SELECT * FROM `beds` WHERE `team_id`=?";
+			$get_beds="SELECT * FROM `beds` WHERE team_id=?";
 			$query_beds = $dbh->prepare($get_beds);
 			$query_beds->execute(array($team_id));
 			$total_cost = 0;
@@ -241,7 +248,7 @@ class Display {
 	}
     public function display_table($id){
 		$data= new Data;
-		$html = $data->return_table($id)
+		$html = $data->return_table($id);
 		echo $html;
     }
     public function admin_table($id){
