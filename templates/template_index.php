@@ -20,7 +20,7 @@
 	<tr><th>Name</th><th>Gender</th><th>Arrival</th><th>Departure</th><th>Linens</th><th>Disability?</th><th>Type</th><th>Role</th><th><input type="submit" value="Delete" name="drop"/></th></tr>
 	<?php 
 		$display= new Display;
-		$display->display_table($team_id);
+		$display->display_table($id);
 	?>
 	<h3><a href="process.php">Accept the list above and proceed to payment page.</a></h3>
 	<p> If you need to add additional people, don't click Accept. Instead continue to add people below and when completed, click on Save the Additions.  The two lists will be merged so you can pay.</p>
