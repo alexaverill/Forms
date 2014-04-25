@@ -1,15 +1,6 @@
 <?php
-//include('local_header.php');
+include('templates/header_template.php');
 ?>
-<html>
-<head>
-<title></title>
-<link rel="stylesheet" href="style.css"/>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-<script src="scripts/jquery.jeditable.js"></script>
-<script src="scripts/logic.js"></script>
-</head>
-<body>
 <h2>To add a new bed reservation, enter the Student or Chaperone Name into the Reservation List. Add additional people by clicking on "Add Another Person".  You must enter a first name into the form to reserve a room and calculate prices. Blank fields will not be calculated.</h2>
 <p>NOTE: Often there are an odd number of students, but we don't want you to be charged for the single price. If a student is in a room alone because he or she is an odd number in the select "Double". Select "Single" ONLY if you intend the student or chaperone to purposefully be in the room alone, not as a result of having an odd number of male or female students.</p>
 	<hr>
