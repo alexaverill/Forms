@@ -43,7 +43,8 @@ class Data{
     	global $dbh;
     	$sql = "INSERT INTO `beds` (`id`, `team_id`, `first`, `last`, `gender`, `arrive`, `depart`, `linens`, `occ`, `disability`, `role`, `date`)
     	 VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
-    	 $insert = $dbh->prepare($sql);
+    	 
+	 $insert = $dbh->prepare($sql);
 	 if (!$insert) {
 	    echo "\nPDO::errorInfo():\n";
 	    print_r($pdo->errorInfo());
