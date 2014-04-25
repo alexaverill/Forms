@@ -206,48 +206,48 @@ $(document).click(function(){
 	get_days();
 });
 $(document).ready(function() {
- $('.editname').editable('name.php', { 
+ $('.editname').editable('updaters/name.php', { 
      type   : 'textarea',
      submit : 'OK',
      onblur : 'submit'
  });
-  $('.editgender').editable('gender.php', { 
+  $('.editgender').editable('updaters/gender.php', { 
      data   : " {'m':'Male','f':'Female'}",
      type   : 'select',
      submit : 'OK',
      onblur : 'submit' 
  });
-  $('.editarrive').editable('arrive.php', { 
+  $('.editarrive').editable('updaters/arrive.php', { 
      data   : " {'14':'May 14th','15':'May 15th','16':'May 16th','17':'May 17th'}",
      type   : 'select',
      submit : 'OK',
      onblur : 'submit' 
  });
-  $('.editdepart').editable('depart.php', { 
+  $('.editdepart').editable('updaters/depart.php', { 
      data   : " {'14':'May 14th','15':'May 15th','16':'May 16th','17':'May 17th','18':'May 18th','19':'May 19th','20':'May 20th'}",
      type   : 'select',
      submit : 'OK',
      onblur : 'submit' 
  });
-  $('.editlinens').editable('linens.php', { 
+  $('.editlinens').editable('updaters/linens.php', { 
      data   : " {'0':'No','1':'Yes'}",
      type   : 'select',
      submit : 'OK',
      onblur : 'submit'
  });
-  $('.editocc').editable('occ.php', { 
+  $('.editocc').editable('updaters/occ.php', { 
      data   : " {'2':'Double','1':'Alone'}",
      type   : 'select',
      submit : 'OK',
      onblur : 'submit'
  });
-  $('.editdis').editable('dis.php', { 
+  $('.editdis').editable('updaters/dis.php', { 
      data   : " {'no':'No','yes':'Yes'}",
      type   : 'select',
      submit : 'OK',
      onblur : 'submit' 
  });
-  $('.editrole').editable('role.php', { 
+  $('.editrole').editable('updaters/role.php', { 
      data   : " {'competitor':'Competitor','chaperone':'Chaperone','noncompetitor':'Non Competitor'}",
      type   : 'select',
      submit : 'OK',

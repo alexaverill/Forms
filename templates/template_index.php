@@ -11,6 +11,7 @@ include('templates/header_template.php');
 	<tr><th>Name</th><th>Gender</th><th>Arrival</th><th>Departure</th><th>Linens</th><th>Disability?</th><th>Type</th><th>Role</th><th><input type="submit" value="Delete" name="drop"/></th></tr>
 	<?php 
 		$display= new Display;
+		$id = 31;
 		$display->display_table($id);
 	?>
 	<h3><a href="process.php">Accept the list above and proceed to payment page.</a></h3>

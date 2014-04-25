@@ -9,6 +9,7 @@ include('templates/header_template.php');
 	<?php 
 		$display= new Display;
 		echo $id;
+		$id = 31;
 		$display->display_table($id);
 	?>
 	</table>

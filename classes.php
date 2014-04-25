@@ -248,6 +248,7 @@ class Display {
 		include($final_page);
 	}
     public function display_table($id){
+		echo "Id:$id";
 		$data= new Data;
 		$html = $data->return_table($id);
 		echo $html;
