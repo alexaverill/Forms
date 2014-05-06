@@ -1,4 +1,5 @@
 <?php
+include('session.php');
 include('templates/header_template.php');
 ?>
 <h2>To add a new bed reservation, enter the Student or Chaperone Name into the Reservation List. Add additional people by clicking on "Add Another Person".  You must enter a first name into the form to reserve a room and calculate prices. Blank fields will not be calculated.</h2>
@@ -11,8 +12,7 @@ include('templates/header_template.php');
 	<tr><th>Name</th><th>Gender</th><th>Arrival</th><th>Departure</th><th>Linens</th><th>Disability?</th><th>Type</th><th>Role</th><th><input type="submit" value="Delete" name="drop"/></th></tr>
 	<?php 
 		$display= new Display;
-		$id = 31;
-		$display->display_table($id);
+		$display->display_table();
 	?>
 	<h3><a href="process.php">Accept the list above and proceed to payment page.</a></h3>
 	<p> If you need to add additional people, don't click Accept. Instead continue to add people below and when completed, click on Save the Additions.  The two lists will be merged so you can pay.</p>

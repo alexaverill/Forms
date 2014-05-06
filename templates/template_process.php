@@ -1,4 +1,5 @@
 <?php
+include('session.php');
 include('templates/header_template.php');
 ?>
 <h2><A HREF="javascript:window.print()"><img src="source/printer.png"/> Print this Page</A></h2>
@@ -8,8 +9,9 @@ include('templates/header_template.php');
 <table><tr><th>Name</th><th>Gender</th><th>Arrival</th><th>Departure</th><th>Linens</th><th>Disability?</th><th>Type</th><th>Role</th><th>Status</th><th>Price</th></tr>
 	<?php 
 		$display= new Display;
+		$id = $SESSION['id'];
 		echo $id;
-		$id = 31;
+		//$id = $SESSION['id'];
 		$display->display_table($id);
 	?>
 	</table>

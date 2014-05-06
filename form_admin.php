@@ -2,10 +2,8 @@
 
 include('local_header.php');
 $data = new Data;
+$display-> display_page('admin');
 
-	if($_POST['go']){
-		admin_table($_POST['teams']);
-	}
 	if($_POST['paid']){
 		$data->set_paid($id);
 	}

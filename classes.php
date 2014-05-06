@@ -1,16 +1,40 @@
 <?php
+class Verification{
+     public function is_admin(){
+        if ($_SESSION['admin']){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function is_user(){
+        if(strlen($_SESSION['name'])>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
 class Data{
+	private $team_id;
+	function __construct(){
+		$team = 0;
+	}
+	function __construct1($id){
+		$team_id = $id;
+	}
     //update, remove,or return data from the table.
     public function return_team_id(){
 		/*
 		 * Get the team ID from the database and return it
 		 * 
 		 **/
-		$getid = mysql_query("SELECT * FROM `team` WHERE `username` = '$name'") or die (mysql_error()); //Gets user ID query
+		/*$getid = mysql_query("SELECT * FROM `team` WHERE `username` = '$name'") or die (mysql_error()); //Gets user ID query
 		while($getname= mysql_fetch_array($getid)){		//Picks out user ID
 			$id= $getname['id'];
 			$team_name=$getname['name'];		
 		}	
+		*/
 		
     }
     public function team_options(){
@@ -145,6 +169,7 @@ class Data{
         public function return_admin_table($team){
 	$cost=31;		
 	$team_id=$team;
+	global $dbh;
 	/*echo '<h2>School Information</h2>';
 	$get_username="SELECT * FROM `team` WHERE `id`='$team_id'";
 	$getname=mysql_query($get_username)or die(mysql_error());
@@ -247,8 +272,8 @@ class Display {
 		$final_page .= '.php';
 		include($final_page);
 	}
-    public function display_table($id){
-		echo "Id:$id";
+    public function display_table(){
+		$id = $_SESSION['id'];
 		$data= new Data;
 		$html = $data->return_table($id);
 		echo $html;
